@@ -11,3 +11,11 @@ This project is interesting for me because I personally love dogs, and I have so
 Therefore, as a dog owner, I think it will make life so much easier to have an app that keeps track of 
 all our dog's needs and to ensure that our furry friends are happy and healthy.
 
+## User Stories
+- As a user, I want to be able to add a profile for a dog in the application, including details like name, weight, 
+  height, and breed.
+- As a user, I want to be able to view the list of all my dogs’ profiles that I have added to the application.
+- As a user, I want to be able to update my dog’s health records such as medications, vaccinations, de-wormings,
+  and hygiene routines. 
+- As a user, I want to be able to schedule feeding and vet visit times for my dogs and receive reminders.
+-  As a user, I want to be able to remove a dog’s profile from the application when needed.
