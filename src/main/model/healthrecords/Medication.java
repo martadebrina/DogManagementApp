@@ -1,4 +1,4 @@
 package model.healthrecords;
 
-public class Medications {
+public class Medication {
 }

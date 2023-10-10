@@ -3,12 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class Dogs {
     private int id;             // User's ID
     private List<Dog> dogs;     // List of dogs that user have
 
 
-    public User() {
+    public Dogs() {
         dogs = new ArrayList<>();
     }
 
