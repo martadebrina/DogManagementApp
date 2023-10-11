@@ -17,7 +17,11 @@ public class DogsTest {
         dog2 = new Dog("Ciko", "Beagle", 10.7,36.4);
         dog3 = new Dog("Milo", "Beagle", 10.7,35.4);
         test = new Dogs();
+        dog3.resetId();
+        dog2.resetId();
+        dog1.resetId();
     }
+
 
     @Test
     public void testAddOneDog(){
@@ -45,23 +49,27 @@ public class DogsTest {
         test.addDog(dog2);
         test.addDog(dog3);
         test.removeDog(dog2);
-        assertEquals(2, test.getDogs().size());
-        assertEquals(dog1, test.getDogs().get(0));
-        assertEquals(dog3, test.getDogs().get(1));
+        List<Dog> dogs = test.getDogs();
+        assertEquals(2, dogs.size());
+        assertEquals(dog1, dogs.get(0));
+        assertEquals(dog3, dogs.get(1));
     }
+
 
     @Test
     public void testRemoveDogMultipleTimes() {
+        test = new Dogs();
         test.addDog(dog2);
         test.addDog(dog3);
         test.addDog(dog1);
-        test.removeDog(dog3);
         test.removeDog(dog1);
+        test.removeDog(dog3);
         List<Dog> dogs = test.getDogs();
-        assertEquals(1, dogs.size());
         assertTrue(dogs.contains(dog2));
+        assertEquals(1, dogs.size());
         test.removeDog(dog2);
         assertTrue(dogs.isEmpty());
-
+        test.removeDog(dog1);
+        assertTrue(dogs.isEmpty());
     }
 }

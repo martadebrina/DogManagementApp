@@ -19,6 +19,7 @@ public class DogTest {
                 LocalDate.of(2022, 10, 10));
         vacc1 = new HealthRecord("VACCINATION","Rabies",
                 LocalDate.of(2023, 8, 10));
+        vacc1.resetHealthId();
     }
 
     @Test
@@ -27,14 +28,21 @@ public class DogTest {
         assertEquals("Akita", dogTest.getBreed());
         assertEquals(32.5, dogTest.getWeight());
         assertEquals(64, dogTest.getHeight());
-        List<HealthRecord> healthRecord = dogTest.getHealthRecord();
+        List<HealthRecord> healthRecord = dogTest.getHealthRecords();
         assertTrue(healthRecord.isEmpty());
+
+        assertEquals("MEDICATION", med1.getHealthRecordType());
+        assertEquals("Ampisol 2 g", med1.getHealthRecordName());
+        assertEquals( LocalDate.of(2022, 10, 10), med1.getHealthRecordDate());
+        assertEquals("VACCINATION", vacc1.getHealthRecordType());
+        assertEquals("Rabies", vacc1.getHealthRecordName());
+        assertEquals( LocalDate.of(2023, 8, 10), vacc1.getHealthRecordDate());
     }
 
     @Test
     public void testAddOneHealthRecord() {
         dogTest.addHealthRecord(med1);
-        List<HealthRecord> healthRecord1 = dogTest.getHealthRecord();
+        List<HealthRecord> healthRecord1 = dogTest.getHealthRecords();
         assertEquals(1, healthRecord1.size());
         assertTrue(healthRecord1.contains(med1));
     }
@@ -43,7 +51,7 @@ public class DogTest {
     public void testAddMultipleHealthRecord(){
         dogTest.addHealthRecord(med1);
         dogTest.addHealthRecord(vacc1);
-        List<HealthRecord> healthRecord = dogTest.getHealthRecord();
+        List<HealthRecord> healthRecord = dogTest.getHealthRecords();
         assertEquals(2, healthRecord.size());
         assertEquals(med1, healthRecord.get(0));
         assertEquals(vacc1, healthRecord.get(1));
@@ -53,8 +61,8 @@ public class DogTest {
     public void testRemoveOneHealthRecord(){
         dogTest.addHealthRecord(med1);
         dogTest.addHealthRecord(vacc1);
-        dogTest.removeHealthRecord(vacc1);
-        List<HealthRecord> healthRecord = dogTest.getHealthRecord();
+        dogTest.removeHealthRecord(2);
+        List<HealthRecord> healthRecord = dogTest.getHealthRecords();
         assertEquals(1, healthRecord.size());
         assertTrue(healthRecord.contains(med1));
     }
@@ -63,10 +71,11 @@ public class DogTest {
     public void testRemoveMultipleHealthRecord(){
         dogTest.addHealthRecord(med1);
         dogTest.addHealthRecord(vacc1);
-        dogTest.removeHealthRecord(vacc1);
-        dogTest.removeHealthRecord(med1);
-        List<HealthRecord> healthRecord = dogTest.getHealthRecord();
+        dogTest.removeHealthRecord(2);
+        dogTest.removeHealthRecord(1);
+        List<HealthRecord> healthRecord = dogTest.getHealthRecords();
         assertTrue(healthRecord.isEmpty());
+
     }
 
 
