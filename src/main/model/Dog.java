@@ -1,7 +1,5 @@
 package model;
 
-import model.healthrecords.Medication;
-
 /**
  * The DogProfile class represents a dog's profile within the "Puppy Pal" application.
  * It stores essential details about a dog, including its ID, name, breed, age, weight, and height.
@@ -9,34 +7,42 @@ import model.healthrecords.Medication;
  * different dogs in the application. Users can create, update, and retrieve dog profiles
  * to keep track of their dogs.
  */
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dog {
     private int id;             // Unique identifier for each dog profile
+    private static int nextId = 1;             // Unique identifier for each dog profile
     private String dogName;     // Dog's name
     private String breed;       // Dog's breed
     private double weight;      // Dog's weight in pounds
     private double height;      // Dog's height in centimeters
+    private List<HealthRecord> healthRecord;
     //private Medication med;
 
     // Constructor
     // REQUIRES:
     // MODIFIES:this
     // EFFECTS: construct
-    public Dog(int id, String name, String breed, double weight, double height) {
-        this.id = id;
+    public Dog(String name, String breed, double weight, double height) {
+        this.id = nextId++;
         this.dogName = name;
         this.breed = breed;
         this.weight = weight;
         this.height = height;
-        //this.med = med;
+        healthRecord = new ArrayList<>();
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
-    public String getName() {
+    public String getDogName() {
         return dogName;
+    }
+
+    public String getBreed() {
+        return breed;
     }
 
     public double getWeight() {
@@ -47,10 +53,16 @@ public class Dog {
         return height;
     }
 
-
-
-    // Method to delete the dog profile
-    public void deleteProfile() {
-        // Implement logic to delete the profile (e.g., remove from database)
+    public List<HealthRecord> getHealthRecord() {
+        return healthRecord;
     }
+
+    public void addHealthRecord(HealthRecord healthRecord) {
+        this.healthRecord.add(healthRecord);
+    }
+
+    public void removeHealthRecord(HealthRecord healthRecord) {
+        this.healthRecord.remove(healthRecord);
+    }
+
 }

@@ -1,32 +1,35 @@
 package model;
 
-import model.healthrecords.Vaccination;
-import model.healthrecords.Medication;
-import java.util.List;
+import java.time.LocalDate;
 
 public class HealthRecord {
-    private List<Medication> medications;
-    private List<Vaccination> vaccinations;
+    private String healthRecordName;
+    private String healthRecordType;
+    private LocalDate healthRecordDate;
 
-    // Constructor
-    public HealthRecord(List<Medication> medications, List<Vaccination> vaccinations) {
-        this.medications = medications;
-        this.vaccinations = vaccinations;
+    public HealthRecord(String healthRecordType, String scheduleName, LocalDate healthRecordDate) {
+        this.healthRecordType = healthRecordType;
+        this.healthRecordName = scheduleName;
+        this.healthRecordDate = healthRecordDate;
     }
 
-    public List<Medication> getMedications() {
-        return medications;
+    public String getHealthRecordName() {
+        return healthRecordName;
     }
 
-    public List<Vaccination> getVaccinations() {
-        return vaccinations;
+    public LocalDate getHealthRecordDate() {
+        return healthRecordDate;
     }
 
-    public void addMedication(Medication medication) {
-        medications.add(medication);
+    public String getHealthRecordType() {
+        return healthRecordType;
     }
 
-    public void addVaccination(Vaccination vaccination) {
-        vaccinations.add(vaccination);
+    public void setHealthRecordName(String healthRecordName) {
+        this.healthRecordName = healthRecordName;
+    }
+
+    public void setHealthRecordDate(LocalDate healthRecordDate) {
+        this.healthRecordDate = healthRecordDate;
     }
 }

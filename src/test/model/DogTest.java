@@ -1,0 +1,73 @@
+package model;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class DogTest {
+    private Dog dogTest;
+    private HealthRecord med1;
+    private HealthRecord vacc1;
+
+    @BeforeEach
+    public void setUp() {
+        dogTest = new Dog("Brownie", "Akita", 32.5,64);
+        med1 = new HealthRecord("MEDICATION","Ampisol 2 g",
+                LocalDate.of(2022, 10, 10));
+        vacc1 = new HealthRecord("VACCINATION","Rabies",
+                LocalDate.of(2023, 8, 10));
+    }
+
+    @Test
+    public void testConstructor(){
+        assertEquals("Brownie", dogTest.getDogName());
+        assertEquals("Akita", dogTest.getBreed());
+        assertEquals(32.5, dogTest.getWeight());
+        assertEquals(64, dogTest.getHeight());
+        List<HealthRecord> healthRecord = dogTest.getHealthRecord();
+        assertTrue(healthRecord.isEmpty());
+    }
+
+    @Test
+    public void testAddOneHealthRecord() {
+        dogTest.addHealthRecord(med1);
+        List<HealthRecord> healthRecord1 = dogTest.getHealthRecord();
+        assertEquals(1, healthRecord1.size());
+        assertTrue(healthRecord1.contains(med1));
+    }
+
+    @Test
+    public void testAddMultipleHealthRecord(){
+        dogTest.addHealthRecord(med1);
+        dogTest.addHealthRecord(vacc1);
+        List<HealthRecord> healthRecord = dogTest.getHealthRecord();
+        assertEquals(2, healthRecord.size());
+        assertEquals(med1, healthRecord.get(0));
+        assertEquals(vacc1, healthRecord.get(1));
+    }
+
+    @Test
+    public void testRemoveOneHealthRecord(){
+        dogTest.addHealthRecord(med1);
+        dogTest.addHealthRecord(vacc1);
+        dogTest.removeHealthRecord(vacc1);
+        List<HealthRecord> healthRecord = dogTest.getHealthRecord();
+        assertEquals(1, healthRecord.size());
+        assertTrue(healthRecord.contains(med1));
+    }
+
+    @Test
+    public void testRemoveMultipleHealthRecord(){
+        dogTest.addHealthRecord(med1);
+        dogTest.addHealthRecord(vacc1);
+        dogTest.removeHealthRecord(vacc1);
+        dogTest.removeHealthRecord(med1);
+        List<HealthRecord> healthRecord = dogTest.getHealthRecord();
+        assertTrue(healthRecord.isEmpty());
+    }
+
+
+}

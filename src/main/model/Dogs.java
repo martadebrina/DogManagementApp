@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dogs {
-    private int id;             // User's ID
     private List<Dog> dogs;     // List of dogs that user have
 
 
@@ -27,6 +26,13 @@ public class Dogs {
     // MODIFIES: this
     // EFFECTS: removes dog from list of user's dogs
     public void removeDog(Dog dog) {
-        dogs.remove(dog);
+        for (Dog d: dogs) {
+            if (d.getId() == dog.getId()) {
+                dogs.remove(d);
+                break;
+            }
+        }
     }
+
+
 }
