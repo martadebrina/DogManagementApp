@@ -136,6 +136,7 @@ public class PuppyPal {
         if (!foundDog) {
             System.out.println("INVALID DOG!");
         }
+
         foundDog = false;
     }
 
