@@ -121,16 +121,22 @@ public class PuppyPal {
     // EFFECTS: remove a dog from user's dogs
     private void doRemoveDog() {
         System.out.println("Which dog that you want to remove? ");
-        System.out.println("ID: ");
+        System.out.println("Enter dog's ID: ");
         int dogId = input.nextInt();
         input.nextLine();
+        boolean foundDog = false;
         for (Dog d : dogs.getDogs()) {
             if (dogId == d.getId()) {
                 dogs.removeDog(d);
+                System.out.println("Dog removed successfully!");
+                foundDog = true;
+                break;
             }
         }
-
-        System.out.println("Dog removed successfully!");
+        if (!foundDog) {
+            System.out.println("INVALID DOG!");
+        }
+        foundDog = false;
     }
 
     // MODIFIES: this
@@ -151,6 +157,7 @@ public class PuppyPal {
             if (dogId == d.getId()) {
                 HealthRecord healthRecord = new HealthRecord(type, name, date);
                 d.addHealthRecord(healthRecord);
+                break;
             }
         }
         System.out.println("Health record added successfully!");
@@ -190,13 +197,19 @@ public class PuppyPal {
         System.out.println("Enter Health ID of health record that you want to remove:");
         int healthId = input.nextInt();
         input.nextLine();
+        boolean foundHealth = false;
         for (Dog d : dogs.getDogs()) {
             if (dogId == d.getId()) {
                 d.removeHealthRecord(healthId);
+                foundHealth = true;
+                System.out.println("Health record removed successfully!");
+                break;
             }
         }
 
-        System.out.println("Health record removed successfully!");
+        if (!foundHealth) {
+            System.out.println("REQUEST ERROR!");
+        }
 
 
     }
