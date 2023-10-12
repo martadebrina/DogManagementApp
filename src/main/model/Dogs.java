@@ -22,6 +22,7 @@ public class Dogs {
         dogs.add(dog);
     }
 
+
     // REQUIRES: the given dog must already be in the dogs list
     // MODIFIES: this
     // EFFECTS: removes dog from list of user's dogs

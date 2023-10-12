@@ -2,7 +2,6 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,12 +12,12 @@ public class DogTest {
     private HealthRecord vacc1;
 
     @BeforeEach
-    public void setUp() {
+    public void runBefore() {
         dogTest = new Dog("Brownie", "Akita", 32.5,64);
         med1 = new HealthRecord("MEDICATION","Ampisol 2 g",
-                LocalDate.of(2022, 10, 10));
+                "2022-10-10");
         vacc1 = new HealthRecord("VACCINATION","Rabies",
-                LocalDate.of(2023, 8, 10));
+                "2023-08-10");
         vacc1.resetHealthId();
     }
 
@@ -33,10 +32,10 @@ public class DogTest {
 
         assertEquals("MEDICATION", med1.getHealthRecordType());
         assertEquals("Ampisol 2 g", med1.getHealthRecordName());
-        assertEquals( LocalDate.of(2022, 10, 10), med1.getHealthRecordDate());
+        assertEquals( "2022-10-10", med1.getHealthRecordDate());
         assertEquals("VACCINATION", vacc1.getHealthRecordType());
         assertEquals("Rabies", vacc1.getHealthRecordName());
-        assertEquals( LocalDate.of(2023, 8, 10), vacc1.getHealthRecordDate());
+        assertEquals( "2023-08-10", vacc1.getHealthRecordDate());
     }
 
     @Test

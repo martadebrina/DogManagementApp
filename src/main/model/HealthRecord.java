@@ -7,10 +7,10 @@ public class HealthRecord {
     private static int nextHealthId = 1;             // Unique identifier for each dog profile
     private String healthRecordName;
     private String healthRecordType;
-    private LocalDate healthRecordDate;
+    private String healthRecordDate;
 
     //constructor
-    public HealthRecord(String healthRecordType, String scheduleName, LocalDate healthRecordDate) {
+    public HealthRecord(String healthRecordType, String scheduleName, String healthRecordDate) {
         this.healthId = nextHealthId++;
         this.healthRecordType = healthRecordType;
         this.healthRecordName = scheduleName;
@@ -23,7 +23,7 @@ public class HealthRecord {
         return healthRecordName;
     }
 
-    public LocalDate getHealthRecordDate() {
+    public String getHealthRecordDate() {
         return healthRecordDate;
     }
 
