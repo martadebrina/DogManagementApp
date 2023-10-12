@@ -106,10 +106,14 @@ public class PuppyPal {
     // MODIFIES: this
     // EFFECTS: return user's dogs
     private void doViewDogs() {
-        System.out.println("List of your dogs:");
-        for (Dog d : dogs.getDogs()) {
-            System.out.println("Dog's ID: " + d.getId() + " Name: " + d.getDogName() + " Breed: " + d.getBreed()
-                    + " Weight: " + d.getWeight() + " Height: " + d.getHeight());
+        if (dogs.getDogs().isEmpty()) {
+            System.out.println("Oops, you don't have any dogs yet. Add the dog first!");
+        } else {
+            System.out.println("List of your dogs:");
+            for (Dog d : dogs.getDogs()) {
+                System.out.println("Dog's ID: " + d.getId() + " Name: " + d.getDogName() + " Breed: " + d.getBreed()
+                        + " Weight: " + d.getWeight() + " Height: " + d.getHeight());
+            }
         }
     }
 
@@ -162,9 +166,13 @@ public class PuppyPal {
         for (Dog d : dogs.getDogs()) {
             if (dogId == d.getId()) {
                 List<HealthRecord> healthRecords = d.getHealthRecords();
-                for (HealthRecord h : healthRecords) {
-                    System.out.println("Health ID:" + h.getHealthId() + " Type:" + h.getHealthRecordType()
-                            + " Name:" + h.getHealthRecordName() + " Date:" + h.getHealthRecordDate());
+                if (healthRecords.isEmpty()) {
+                    System.out.println("There is no health records for this dog.");
+                } else {
+                    for (HealthRecord h : healthRecords) {
+                        System.out.println("Health ID:" + h.getHealthId() + " Type:" + h.getHealthRecordType()
+                                + " Name:" + h.getHealthRecordName() + " Date:" + h.getHealthRecordDate());
+                    }
                 }
 
             }
