@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// represents the user's list of dogs
 public class Dogs {
     private List<Dog> dogs;     // List of dogs that user have
 

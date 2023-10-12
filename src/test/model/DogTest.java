@@ -74,6 +74,9 @@ public class DogTest {
         dogTest.removeHealthRecord(1);
         List<HealthRecord> healthRecord = dogTest.getHealthRecords();
         assertTrue(healthRecord.isEmpty());
+        dogTest.removeHealthRecord(2);
+        assertTrue(healthRecord.isEmpty());
+
 
     }
 

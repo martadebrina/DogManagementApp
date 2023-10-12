@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DogsTest {
@@ -12,7 +13,7 @@ public class DogsTest {
     private Dogs test;
 
     @BeforeEach
-    public void setUp() {
+    public void runBefore() {
         dog1 = new Dog("Brownie", "Akita", 32.5,64);
         dog2 = new Dog("Ciko", "Beagle", 10.7,36.4);
         dog3 = new Dog("Milo", "Beagle", 10.7,35.4);
