@@ -36,7 +36,7 @@ public class HealthRecord {
         return healthId;
     }
 
-    public void resetHealthId() {
+    public static void resetHealthId() {
         nextHealthId = 1;
     }
 

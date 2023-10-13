@@ -64,12 +64,21 @@ public class Dog {
     // MODIFIES: this
     // EFFECTS: removes health record from list of dog's health record
     public void removeHealthRecord(int healthId) {
+        boolean foundHealthRec = false;
         for (HealthRecord h: healthRecords) {
             if (h.getHealthId() == healthId) {
                 healthRecords.remove(h);
+                foundHealthRec = true;
                 break;
             }
         }
+
+        if (!foundHealthRec) {
+            System.out.println("INVALID HEALTH ID");
+        } else {
+            System.out.println("Health record removed successfully");
+        }
+
     }
 
     // For test only

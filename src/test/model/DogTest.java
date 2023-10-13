@@ -18,7 +18,7 @@ public class DogTest {
                 "2022-10-10");
         vacc1 = new HealthRecord("VACCINATION","Rabies",
                 "2023-08-10");
-        vacc1.resetHealthId();
+        HealthRecord.resetHealthId();
     }
 
     @Test

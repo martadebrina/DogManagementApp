@@ -7,6 +7,7 @@ import model.Dog;
 import model.Dogs;
 import model.HealthRecord;
 
+// represents user interface for the application
 public class PuppyPal {
     private Dogs dogs;
     private Scanner input;
@@ -62,7 +63,7 @@ public class PuppyPal {
 
 
     // MODIFIES: this
-    // EFFECTS: initializes accounts
+    // EFFECTS: initializes dogs
     private void init() {
         dogs = new Dogs();
         input = new Scanner(System.in);
@@ -72,7 +73,7 @@ public class PuppyPal {
 
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
-        System.out.println("\nWelcome to Puppy Pal! Please select an option: ");
+        System.out.println("\nWelcome to PuppyPal! Please select an option: ");
         System.out.println("\t1 -> Add a dog profile");
         System.out.println("\t2 -> View my dogs");
         System.out.println("\t3 -> Remove a dog profile");
@@ -86,7 +87,7 @@ public class PuppyPal {
     // MODIFIES: this
     // EFFECTS: add a dog to user's dogs
     private void doAddDog() {
-        System.out.println("Please add details of you dog:");
+        System.out.println("Please add details of your dog:");
         System.out.println("Name: ");
         String name = input.nextLine();
         System.out.println("Breed: ");
@@ -111,8 +112,8 @@ public class PuppyPal {
         } else {
             System.out.println("List of your dogs:");
             for (Dog d : dogs.getDogs()) {
-                System.out.println("Dog's ID: " + d.getId() + " Name: " + d.getDogName() + " Breed: " + d.getBreed()
-                        + " Weight: " + d.getWeight() + " Height: " + d.getHeight());
+                System.out.println("Dog's ID: " + d.getId() + ", Name: " + d.getDogName() + ", Breed: " + d.getBreed()
+                        + ", Weight: " + d.getWeight() + "kg, Height: " + d.getHeight() + "cm");
             }
         }
     }
@@ -134,7 +135,7 @@ public class PuppyPal {
             }
         }
         if (!foundDog) {
-            System.out.println("INVALID DOG!");
+            System.out.println("INVALID DOG ID!");
         }
 
         foundDog = false;
@@ -153,15 +154,22 @@ public class PuppyPal {
         String name = input.nextLine();
         System.out.println("Enter health record date(YYYY-MM-DD):");
         String date = input.nextLine();
-
+        boolean foundDog = false;
         for (Dog d : dogs.getDogs()) {
             if (dogId == d.getId()) {
                 HealthRecord healthRecord = new HealthRecord(type, name, date);
                 d.addHealthRecord(healthRecord);
+                foundDog = true;
+
+                System.out.println("Health record added successfully!");
                 break;
             }
         }
-        System.out.println("Health record added successfully!");
+
+        if (!foundDog) {
+            System.out.printf("INVALID DOG ID!");
+        }
+
     }
 
     // MODIFIES: this
@@ -171,6 +179,7 @@ public class PuppyPal {
         System.out.println("ID:");
         int dogId = input.nextInt();
         input.nextLine();
+        boolean foundDog = false;
         for (Dog d : dogs.getDogs()) {
             if (dogId == d.getId()) {
                 List<HealthRecord> healthRecords = d.getHealthRecords();
@@ -178,12 +187,15 @@ public class PuppyPal {
                     System.out.println("There is no health records for this dog.");
                 } else {
                     for (HealthRecord h : healthRecords) {
-                        System.out.println("Health ID:" + h.getHealthId() + " Type:" + h.getHealthRecordType()
-                                + " Name:" + h.getHealthRecordName() + " Date:" + h.getHealthRecordDate());
+                        System.out.println("Health ID:" + h.getHealthId() + ", Type:" + h.getHealthRecordType()
+                                + ", Name:" + h.getHealthRecordName() + ", Date:" + h.getHealthRecordDate());
                     }
                 }
-
+                foundDog = true;
             }
+        }
+        if (!foundDog) {
+            System.out.println("INVALID DOG ID!");
         }
 
     }
@@ -203,13 +215,12 @@ public class PuppyPal {
             if (dogId == d.getId()) {
                 d.removeHealthRecord(healthId);
                 foundHealth = true;
-                System.out.println("Health record removed successfully!");
                 break;
             }
         }
 
         if (!foundHealth) {
-            System.out.println("REQUEST ERROR!");
+            System.out.println("REQUEST ERROR - INVALID ID!");
         }
 
 
