@@ -18,6 +18,7 @@ public class DogsTest {
         dog2 = new Dog("Ciko", "Beagle", 10.7,36.4);
         dog3 = new Dog("Milo", "Beagle", 10.7,35.4);
         test = new Dogs();
+        dog3.resetId();
 
     }
 
