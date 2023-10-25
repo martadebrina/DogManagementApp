@@ -1,0 +1,20 @@
+{"dogs": [
+  {
+    "nextId": 3,
+    "healthRecords": [],
+    "weight": 23.5,
+    "id": 1,
+    "dogName": "Bubu",
+    "breed": "Bulldog",
+    "height": 44
+  },
+  {
+    "nextId": 3,
+    "healthRecords": [],
+    "weight": 23.5,
+    "id": 2,
+    "dogName": "Lili",
+    "breed": "Golden Retriever",
+    "height": 58
+  }
+]}

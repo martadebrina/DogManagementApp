@@ -18,6 +18,5 @@ track of all our dog's needs and to ensure that our dogs are happy and healthy.
   and etc with their date record.
 - As a user, I want to be able to view my dog’s health records that I have added to my dogs.
 - As a user, I want to be able to remove a health record from my dog’s health records.
-- As a user, when I quit the app, I want a reminder to save my dogs and its health records and 
-  the choice to do so or not.
-- As a user, when I open the app, I want the option to load my dogs and its health records from a file.
+- As a user, I want to be able to save my dogs and its health records when I want to do so.
+- As a user, I want the option to load my dogs and its health records from a file.

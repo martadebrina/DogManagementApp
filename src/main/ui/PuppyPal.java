@@ -2,18 +2,27 @@ package ui;
 
 import java.util.Scanner;
 import java.util.List;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import model.Dog;
 import model.Dogs;
 import model.HealthRecord;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 // represents user interface for the application
 public class PuppyPal {
+    private static final String JSON_STORE = "./data/dogs.json";
     private Dogs dogs;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the PuppyPal application
-    public PuppyPal() {
+    public PuppyPal() throws FileNotFoundException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runPuppyPal();
     }
 
@@ -31,7 +40,7 @@ public class PuppyPal {
             command = command.toLowerCase();
             input.nextLine();
 
-            if (command.equals("7")) {
+            if (command.equals("9")) {
                 keepGoing = false;
             } else {
                 processCommand(command);
@@ -56,6 +65,10 @@ public class PuppyPal {
             doViewHealthRecords();
         } else if (command.equals("6")) {
             doRemoveHealthRecord();
+        } else if (command.equals("7")) {
+            doSaveDogs();
+        } else if (command.equals("8")) {
+            doLoadDogs();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -80,7 +93,9 @@ public class PuppyPal {
         System.out.println("\t4 -> Add health record");
         System.out.println("\t5 -> View my dog's health record");
         System.out.println("\t6 -> Remove my dog's health record");
-        System.out.println("\t7 -> Exit");
+        System.out.println("\t7 -> Save my dogs to file");
+        System.out.println("\t8 -> Load my dogs from file");
+        System.out.println("\t9 -> Exit");
     }
 
 
@@ -224,6 +239,29 @@ public class PuppyPal {
         }
 
 
+    }
+
+    // EFFECTS: saves the dogs to file
+    private void doSaveDogs() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(dogs);
+            jsonWriter.close();
+            System.out.println("Saved dogs to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads dogs from file
+    private void doLoadDogs() {
+        try {
+            dogs = jsonReader.read();
+            System.out.println("Loaded dogs from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
 

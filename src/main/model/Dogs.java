@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // represents the user's list of dogs
-public class Dogs {
+public class Dogs implements Writable {
     private List<Dog> dogs;     // List of dogs that user have
 
 
@@ -15,6 +19,10 @@ public class Dogs {
     // getters
     public List<Dog> getDogs() {
         return dogs;
+    }
+
+    public int getNumDogs() {
+        return dogs.size();
     }
 
     // MODIFIES: this
@@ -34,6 +42,24 @@ public class Dogs {
                 break;
             }
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("dogs", dogsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns dogs in this Dogs as a JSON array
+    private JSONArray dogsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Dog d : dogs) {
+            jsonArray.put(d.toJson());
+        }
+
+        return jsonArray;
     }
 
 

@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // represents a dog's profile within the "Puppy Pal" application that contains details about a dog,
 // including its ID, name, breed, age, weight, and height.
 // Each dog profile is associated with a unique identifier (id)
-public class Dog {
+public class Dog implements Writable {
     private int id;                              // Unique identifier for each dog profile
     private static int nextId = 1;
     private String dogName;                     // Dog's name
@@ -79,4 +83,30 @@ public class Dog {
     public void resetId() {
         nextId = 1;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("id", id);
+        json.put("nextId", nextId);
+        json.put("dogName", dogName);
+        json.put("breed", breed);
+        json.put("weight", weight);
+        json.put("height", height);
+        json.put("healthRecords", healthRecordToJson());
+        return json;
+    }
+
+
+    // EFFECTS: returns dogs in this Dogs as a JSON array
+    private JSONArray healthRecordToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (HealthRecord h : healthRecords) {
+            jsonArray.put(h.toJson());
+        }
+
+        return jsonArray;
+    }
+
 }

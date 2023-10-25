@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represent an health record that have type, name, and date
-public class HealthRecord {
+public class HealthRecord implements Writable {
     private int healthId;                   // Unique identifier for each health record
     private static int nextHealthId = 1;
     private String healthRecordName;
@@ -40,4 +44,14 @@ public class HealthRecord {
         nextHealthId = 1;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("healthId", healthId);
+        json.put("healthRecordType", healthRecordType);
+        json.put("healthRecordName", healthRecordName);
+        json.put("healthRecordDate", healthRecordDate);
+        return json;
+    }
 }
+

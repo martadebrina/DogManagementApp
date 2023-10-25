@@ -27,7 +27,7 @@ public class DogsTest {
     public void testAddOneDog(){
         test.addDog(dog1);
         List<Dog> dogs = test.getDogs();
-        assertEquals(1, dogs.size());
+        assertEquals(1, test.getNumDogs());
         assertTrue(dogs.contains(dog1));
 
     }
