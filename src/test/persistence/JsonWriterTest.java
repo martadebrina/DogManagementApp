@@ -50,6 +50,10 @@ class JsonWriterTest extends JsonTest {
             Dogs dogs = new Dogs();
             dogs.addDog(new Dog("Bubu", "Bulldog", 23.5, 44));
             dogs.addDog(new Dog("Lili", "Golden Retriever", 23.5, 58));
+            List<Dog> dogList = dogs.getDogs();
+            Dog dog1 = dogList.get(0);
+            dog1.addHealthRecord(new HealthRecord("Medication", "med1",
+                    "2023-04-03"));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralDogs.json");
             writer.open();
             writer.write(dogs);
@@ -57,10 +61,6 @@ class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralDogs.json");
             dogs = reader.read();
-            List<Dog> dogList = dogs.getDogs();
-            Dog dog1 = dogList.get(0);
-            dog1.addHealthRecord(new HealthRecord("Medication", "med1",
-                    "2023-04-03"));
             assertEquals(2, dogList.size());
             List<HealthRecord> healthRecords1 = new ArrayList<>();
             healthRecords1.add(new HealthRecord("Medication", "med1",
