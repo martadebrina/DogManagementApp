@@ -1,4 +1,5 @@
 package persistence;
+
 import model.Dogs;
 import org.json.JSONObject;
 
