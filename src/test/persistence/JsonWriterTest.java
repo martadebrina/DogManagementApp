@@ -2,9 +2,11 @@ package persistence;
 
 import model.Dog;
 import model.Dogs;
+import model.HealthRecord;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,9 +58,16 @@ class JsonWriterTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testWriterGeneralDogs.json");
             dogs = reader.read();
             List<Dog> dogList = dogs.getDogs();
+            Dog dog1 = dogList.get(0);
+            dog1.addHealthRecord(new HealthRecord("Medication", "med1",
+                    "2023-04-03"));
             assertEquals(2, dogList.size());
-            checkDog("Bubu", "Bulldog", 23.5, 44, dogList.get(0));
-            checkDog("Lili", "Golden Retriever", 23.5, 58, dogList.get(1));
+            List<HealthRecord> healthRecords1 = new ArrayList<>();
+            healthRecords1.add(new HealthRecord("Medication", "med1",
+                    "2023-04-03"));
+            List<HealthRecord> healthRecords2 = new ArrayList<>();
+            checkDog("Bubu", "Bulldog", 23.5, 44, dogList.get(0), healthRecords1);
+            checkDog("Lili", "Golden Retriever", 23.5, 58, dogList.get(1), healthRecords2);
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

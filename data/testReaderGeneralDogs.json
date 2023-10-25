@@ -1,7 +1,8 @@
 {"dogs": [
   {
     "nextId": 3,
-    "healthRecords": [],
+    "healthRecords": [{"healthId": 1, "healthRecordType": "Medication", "healthRecordName":  "med1",
+    "healthRecordDate": "2023-04-03" }],
     "weight": 23.5,
     "id": 1,
     "dogName": "Bubu",
