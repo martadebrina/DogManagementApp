@@ -31,7 +31,7 @@ track of all our dog's needs and to ensure that our dogs are happy and healthy.
   You can click "BACK" button if you wish to go back to the main menu.
   
 - You can generate the third required action related to the user story "remove a dog's profile" by 
-  click the "Remove Dog" button on the main panel. \Enter the ID of the dog you want to remove in the prompted dialog.
+  click the "Remove Dog" button on the main panel. \ Enter the ID of the dog you want to remove in the prompted dialog.
     
 - You can generate the forth required action related to the user story "adding a health record for a dog"
   by first make sure that you already have dog, if not you can add your dog profile first. \
