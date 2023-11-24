@@ -1,126 +1,93 @@
 package ui;
 
 import java.awt.*;
-import java.util.Scanner;
 import java.util.List;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import model.Dog;
 import model.Dogs;
 import model.HealthRecord;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-
 import javax.swing.*;
 
 // represents user interface for the application
 public class PuppyPal extends JFrame {
     private static final String JSON_STORE = "./data/dogs.json";
-
     private Dogs dogs;
-    private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
-
-    private static final int WIDTH = 700;
+    private static final int WIDTH = 400;
     private static final int HEIGHT = 800;
-
-    private static final String INIT_GREETING = "Welcome to PuppyPal!";
-    private JLabel greeting;
+    private static final Color BACKGROUND_COLOR = new Color(0x6d5133);
     private JPanel buttonRow;
+    private JPanel mainPanel;
+    private JPanel dogPanel;
+    private JPanel healthRecordPanel;
 
     // EFFECTS: runs the PuppyPal application
     public PuppyPal() throws FileNotFoundException {
         super("PuppyPal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
         setSize(WIDTH, HEIGHT);
         setLayout(null);
-
+        setResizable(false);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-
-        placeGreeting();
-        placeButtons();
+        initializePanels();
+        showMainPanel();
         dogs = new Dogs();
-        //runPuppyPal();
-
+        this.getContentPane().setBackground(BACKGROUND_COLOR);
+        setVisible(true);
     }
 
-    public void addAddButton() {
-        JButton b1 = new JButton(ButtonNames.ADD.getValue());
-        buttonRow = formatButtonRow(b1);
-        b1.addActionListener(e -> {
-            doAddDog();
-        });
+    // EFFECTS: initializes the main, dog, and health record panels
+    public void initializePanels() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(null);
+        mainPanel.setBounds(0, 0, WIDTH, HEIGHT);
+        mainPanel.setBackground(BACKGROUND_COLOR);
+        placeButtons();
+        placeImage();
+        add(mainPanel, "welcome");
+
+        dogPanel = new JPanel();
+        dogPanel.setLayout(null);
+        dogPanel.setBounds(0, 0, WIDTH, HEIGHT);
+        dogPanel.setBackground(BACKGROUND_COLOR);
+        add(dogPanel, "dogs");
+
+        healthRecordPanel = new JPanel();
+        healthRecordPanel.setLayout(null);
+        healthRecordPanel.setBounds(0, 0, WIDTH, HEIGHT);
+        healthRecordPanel.setBackground(BACKGROUND_COLOR);
+        add(healthRecordPanel, "healthRecords");
     }
 
-    public void addViewButton() {
-        JButton b2 = new JButton(ButtonNames.VIEW.getValue());
-        buttonRow.add(b2);
-        b2.addActionListener(e -> {
-            doViewDogs();
-        });
+    // EFFECTS: displays the main panel
+    public void showMainPanel() {
+        mainPanel.setVisible(true);
+        dogPanel.setVisible(false);
+        healthRecordPanel.setVisible(false);
     }
 
-    public void addRemoveButton() {
-        JButton b3 = new JButton(ButtonNames.REMOVE.getValue());
-        buttonRow.add(b3);
-        b3.addActionListener(e -> {
-            doRemoveDog();
-        });
+    // EFFECTS: displays the dog panel
+    public void showDogPanel() {
+        mainPanel.setVisible(false);
+        dogPanel.setVisible(true);
+        healthRecordPanel.setVisible(false);
     }
 
-    public void addAddHrButton() {
-        JButton b4 = new JButton(ButtonNames.ADDHR.getValue());
-        buttonRow.add(b4);
-        b4.addActionListener(e -> {
-            doAddHealthRecord();
-        });
+    // EFFECTS: displays the health record panel
+    public void showHealthPanel() {
+        mainPanel.setVisible(false);
+        dogPanel.setVisible(false);
+        healthRecordPanel.setVisible(true);
     }
 
-    public void addViewHrButton() {
-        JButton b5 = new JButton(ButtonNames.VIEWHR.getValue());
-        buttonRow.add(b5);
-        b5.addActionListener(e -> {
-            doViewHealthRecords();
-        });
-    }
-
-    public void addRemoveHrButton() {
-        JButton b6 = new JButton(ButtonNames.REMOVEHR.getValue());
-        buttonRow.add(b6);
-        b6.addActionListener(e -> {
-            doRemoveHealthRecord();
-        });
-    }
-
-    public void addSaveButton() {
-        JButton b7 = new JButton(ButtonNames.SAVE.getValue());
-        buttonRow.add(b7);
-        b7.addActionListener(e -> {
-            doSaveDogs();
-        });
-    }
-
-    public void addLoadButton() {
-        JButton b8 = new JButton(ButtonNames.LOAD.getValue());
-        buttonRow.add(b8);
-        b8.addActionListener(e -> {
-            doLoadDogs();
-        });
-    }
-
-    public void addExitButton() {
-        JButton b9 = new JButton(ButtonNames.EXIT.getValue());
-        buttonRow.add(b9);
-        b9.addActionListener(e -> {
-            System.exit(1);
-        });
-    }
-
+    // EFFECTS: creates and places buttons on the main panel
     public void placeButtons() {
+        buttonRow = new JPanel();
         addAddButton();
         addViewButton();
         addRemoveButton();
@@ -130,30 +97,114 @@ public class PuppyPal extends JFrame {
         addSaveButton();
         addLoadButton();
         addExitButton();
-        this.add(buttonRow);
+        mainPanel.add(buttonRow);
     }
-
 
     //EFFECTS: creates and returns row with button included
     public JPanel formatButtonRow(JButton b) {
         JPanel p = new JPanel();
-        p.setLayout(new GridLayout(3,3));
-        p.setBounds(WIDTH / 2 - 300, HEIGHT / 4, 600, 300);
+        p.setLayout(new GridLayout(9, 1));
+        p.setBounds(100, HEIGHT / 3 + 50, 200, 400);
         p.add(b);
+        p.setBackground(BACKGROUND_COLOR);
 
         return p;
     }
 
-    //EFFECTS: creates greeting at top of console
-    private void placeGreeting() {
-        greeting = new JLabel(INIT_GREETING, JLabel.CENTER);
-        greeting.setSize(WIDTH, HEIGHT / 3);
-        this.add(greeting);
+    // MODIFIES: this
+    // EFFECTS: adds a new dog to the list
+    public void addAddButton() {
+        JButton b1 = new JButton(ButtonNames.ADD.getValue());
+        buttonRow = formatButtonRow(b1);
+        b1.addActionListener(e -> {
+            doAddDog();
+        });
     }
 
     // MODIFIES: this
+    // EFFECTS: handles viewing the list of dogs
+    public void addViewButton() {
+        JButton b2 = new JButton(ButtonNames.VIEW.getValue());
+        buttonRow.add(b2);
+        b2.addActionListener(e -> {
+            doViewDogs();
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles removing a dog from the list
+    public void addRemoveButton() {
+        JButton b3 = new JButton(ButtonNames.REMOVE.getValue());
+        buttonRow.add(b3);
+        b3.addActionListener(e -> {
+            doRemoveDog();
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles adding a health record to a dog
+    public void addAddHrButton() {
+        JButton b4 = new JButton(ButtonNames.ADDHR.getValue());
+        buttonRow.add(b4);
+        b4.addActionListener(e -> {
+            doAddHealthRecord();
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles viewing health records for a specific dog
+    public void addViewHrButton() {
+        JButton b5 = new JButton(ButtonNames.VIEWHR.getValue());
+        buttonRow.add(b5);
+        b5.addActionListener(e -> {
+            doViewHealthRecords();
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles removing a health record from a dog
+    public void addRemoveHrButton() {
+        JButton b6 = new JButton(ButtonNames.REMOVEHR.getValue());
+        buttonRow.add(b6);
+        b6.addActionListener(e -> {
+            doRemoveHealthRecord();
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: saves the list of dogs to a file
+    public void addSaveButton() {
+        JButton b7 = new JButton(ButtonNames.SAVE.getValue());
+        buttonRow.add(b7);
+        b7.addActionListener(e -> {
+            doSaveDogs();
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads the list of dogs from a file
+    public void addLoadButton() {
+        JButton b8 = new JButton(ButtonNames.LOAD.getValue());
+        buttonRow.add(b8);
+        b8.addActionListener(e -> {
+            doLoadDogs();
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: exits the application
+    public void addExitButton() {
+        JButton b9 = new JButton(ButtonNames.EXIT.getValue());
+        buttonRow.add(b9);
+        b9.addActionListener(e -> {
+            System.exit(1);
+        });
+    }
+
+
+    // MODIFIES: this
     // EFFECTS: add a dog to user's dogs
-    private void doAddDog() {
+    public void doAddDog() {
         String name = JOptionPane.showInputDialog("What is the dog's name?: ");
         String breed = JOptionPane.showInputDialog("What is the dog's breed?: ");
         double weight = Double.parseDouble(JOptionPane.showInputDialog("What is the dog's weight?: "));
@@ -164,26 +215,43 @@ public class PuppyPal extends JFrame {
 
     }
 
-    // MODIFIES: this
-    // EFFECTS: return user's dogs
-    private void doViewDogs() {
+    // EFFECTS: handles viewing the list of dogs
+    public void doViewDogs() {
         if (dogs.getDogs().isEmpty()) {
-            System.out.println("Oops, you don't have any dogs yet. Add or load the dog first!");
+            JOptionPane.showMessageDialog(null,
+                    "Oops, you don't have any dogs yet. Add or load the dog first!");
         } else {
-            System.out.println("List of your dogs:");
+            // Create the text area for the dogs
+            JTextArea dogsTextArea = new JTextArea();
+            dogsTextArea.setEditable(false);
+
+            // Fill the text area with the list of dogs
             for (Dog d : dogs.getDogs()) {
-                System.out.println("Dog's ID: " + d.getId() + ", Name: " + d.getDogName() + ", Breed: " + d.getBreed()
-                        + ", Weight: " + d.getWeight() + "kg, Height: " + d.getHeight() + "cm");
+                dogsTextArea.append(String.format("Dog's ID: %d, Name: %s, Breed: %s, Weight: %.2fkg, Height: %.2fcm\n",
+                        d.getId(), d.getDogName(), d.getBreed(), d.getWeight(), d.getHeight()));
             }
+
+            // Create a scroll pane and add the text area to it
+            JScrollPane scrollPane = new JScrollPane(dogsTextArea);
+            scrollPane.setBounds(20, 20, 350, 500);
+
+            dogPanel.removeAll();
+
+            // Add the scroll pane to the dog panel
+            dogPanel.add(scrollPane);
+            addBackButton(dogPanel);
+
+            dogPanel.revalidate();
+            dogPanel.repaint();
+
+            showDogPanel();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: remove a dog from user's dogs
-    private void doRemoveDog() {
+    public void doRemoveDog() {
         int dogId = Integer.parseInt(JOptionPane.showInputDialog("Enter the ID of the dog you want to remove: "));
-        //int dogId = input.nextInt();
-        //input.nextLine();
         boolean foundDog = false;
         for (Dog d : dogs.getDogs()) {
             if (dogId == d.getId()) {
@@ -202,7 +270,7 @@ public class PuppyPal extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: add a health record to a dog
-    private void doAddHealthRecord() {
+    public void doAddHealthRecord() {
         int dogId = Integer.parseInt(JOptionPane.showInputDialog("Add health record to which dog? ID: "));
         String type = JOptionPane.showInputDialog("Enter health record type:");
         String name = JOptionPane.showInputDialog("Enter health record name:");
@@ -225,38 +293,40 @@ public class PuppyPal extends JFrame {
 
     }
 
-    // MODIFIES: this
-    // EFFECTS: return the health records of a dog
-    private void doViewHealthRecords() {
-        System.out.println("View health record of which dog?");
-        System.out.println("ID:");
-        int dogId = input.nextInt();
-        input.nextLine();
-        boolean foundDog = false;
-        for (Dog d : dogs.getDogs()) {
-            if (dogId == d.getId()) {
-                List<HealthRecord> healthRecords = d.getHealthRecords();
-                if (healthRecords.isEmpty()) {
-                    System.out.println("There is no health records for this dog.");
-                } else {
-                    for (HealthRecord h : healthRecords) {
-                        System.out.println("Health ID:" + h.getHealthId() + ", Type:" + h.getHealthRecordType()
-                                + ", Name:" + h.getHealthRecordName() + ", Date:" + h.getHealthRecordDate());
-                    }
-                }
-                foundDog = true;
+    // EFFECTS: handles viewing health records for a specific dog
+    public void doViewHealthRecords() {
+        int dogId = Integer.parseInt(JOptionPane.showInputDialog("View health record of which dog? ID: "));
+        StringBuilder healthRecordList = new StringBuilder();
+
+        Dog selectedDog = findDogById(dogId);
+        if (selectedDog == null) {
+            JOptionPane.showMessageDialog(null, "INVALID DOG ID!");
+        } else {
+            List<HealthRecord> healthRecords = selectedDog.getHealthRecords();
+            if (healthRecords.isEmpty()) {
+                healthRecordList.append("There are no health records for this dog.");
+            } else {
+                appendHealthRecord(selectedDog, healthRecordList);
             }
-        }
-        if (!foundDog) {
-            System.out.println("INVALID DOG ID!");
+            healthRecordPanel.removeAll();
 
-        }
 
+            JTextArea textArea = new JTextArea(healthRecordList.toString());
+            textArea.setEditable(false);
+
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setBounds(20, 20, 350, 500);
+            healthRecordPanel.add(scrollPane);
+            addBackButton(healthRecordPanel);
+
+            showHealthPanel();
+        }
     }
+
 
     // MODIFIES: this
     // EFFECTS: remove a health record of a dog
-    private void doRemoveHealthRecord() {
+    public void doRemoveHealthRecord() {
         int dogId = Integer.parseInt(JOptionPane.showInputDialog("Remove health record of which dog? ID: "));
         int healthId = Integer.parseInt(JOptionPane.showInputDialog("Enter Health ID that you want to remove:"));
         boolean foundHealth = false;
@@ -271,12 +341,10 @@ public class PuppyPal extends JFrame {
         if (!foundHealth) {
             JOptionPane.showMessageDialog(null, "REQUEST ERROR - INVALID ID!");
         }
-
-
     }
 
     // EFFECTS: saves the dogs to file
-    private void doSaveDogs() {
+    public void doSaveDogs() {
         try {
             jsonWriter.open();
             jsonWriter.write(dogs);
@@ -291,104 +359,73 @@ public class PuppyPal extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: loads dogs from file
-    private void doLoadDogs() {
+    public void doLoadDogs() {
         try {
-            dogs = jsonReader.read();
+            this.dogs = jsonReader.read();
             JOptionPane.showMessageDialog(null, "Loaded dogs from " + JSON_STORE);
+            System.out.println(dogs);
+            System.out.println(dogs.getDogs().size());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to read from file: " + JSON_STORE);
         }
     }
 
 
+    //EFFECTS: creates image logo at top of console
+    private void placeImage() {
+        ImageIcon image = new ImageIcon(getClass().getResource("logo.png"));
+        JLabel displayField = new JLabel(image, JLabel.CENTER);
+        displayField.setBounds(5, 50, 400, 250);
+        mainPanel.add(displayField);
+    }
+
+    // REQUIRES: panel p is not null
+    // MODIFIES: this
+    // EFFECTS: adds a back button to the specified panel
+    private void addBackButton(JPanel p) {
+        JButton goBackButton = new JButton("BACK");
+        goBackButton.addActionListener(e -> showMainPanel());
+        p.add(goBackButton);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(goBackButton);
+        buttonPanel.setBounds(130, 550, 100, 50);
+        buttonPanel.setBackground(BACKGROUND_COLOR);
+        p.add(buttonPanel);
+    }
 
 
+    // MODIFIES: stringBuilder
+    // EFFECTS: appends health records to the specified string builder
+    private void appendHealthRecord(Dog d, StringBuilder stringBuilder) {
+        stringBuilder.append(String.format("Health records for %s (Dog ID: %d):\n",
+                d.getDogName(), d.getId()));
+        for (HealthRecord h : d.getHealthRecords()) {
+            stringBuilder.append(String.format("Health ID: %d, Type: %s, Name: %s, Date: %s\n",
+                    h.getHealthId(), h.getHealthRecordType(), h.getHealthRecordName(), h.getHealthRecordDate()));
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    // MODIFIES: this
-//    // EFFECTS: initializes dogs
-//    private void init() {
-//        dogs = new Dogs();
-//        input = new Scanner(System.in);
-//        input.useDelimiter("\n");
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: processes user input
-//    private void runPuppyPal() {
-//        boolean keepGoing = true;
-//        String command = "";
-//
-//        init();
-//
-//        while (keepGoing) {
-//            displayMenu();
-//            command = input.next();
-//            command = command.toLowerCase();
-//            input.nextLine();
-//
-//            if (command.equals("9")) {
-//                keepGoing = false;
-//            } else {
-//                processCommand(command);
-//            }
-//        }
-//
-//        System.out.println("\nGoodbye woof woof!");
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: processes user command
-//    private void processCommand(String command) {
-//        if (command.equals("1")) {
-//            doAddDog();
-//        } else if (command.equals("2")) {
-//            doViewDogs();
-//        } else if (command.equals("3")) {
-//            doRemoveDog();
-//        } else if (command.equals("4")) {
-//            doAddHealthRecord();
-//        } else if (command.equals("5")) {
-//            doViewHealthRecords();
-//        } else if (command.equals("6")) {
-//            doRemoveHealthRecord();
-//        } else if (command.equals("7")) {
-//            doSaveDogs();
-//        } else if (command.equals("8")) {
-//            doLoadDogs();
-//        } else {
-//            System.out.println("Selection not valid...");
-//        }
-//    }
-//
-//
-//
-//
-//    // EFFECTS: displays menu of options to user
-//    private void displayMenu() {
-//        System.out.println("\nWelcome to PuppyPal! Please select an option: ");
-//        System.out.println("\t1 -> Add a dog profile");
-//        System.out.println("\t2 -> View my dogs");
-//        System.out.println("\t3 -> Remove a dog profile");
-//        System.out.println("\t4 -> Add health record");
-//        System.out.println("\t5 -> View my dog's health record");
-//        System.out.println("\t6 -> Remove my dog's health record");
-//        System.out.println("\t7 -> Save my dogs to file");
-//        System.out.println("\t8 -> Load my dogs from file");
-//        System.out.println("\t9 -> Exit");
-//    }
+    // EFFECTS: finds a dog by its ID
+    private Dog findDogById(int id) {
+        for (Dog d : dogs.getDogs()) {
+            if (id == d.getId()) {
+                return d;
+            }
+        }
+        return null;
+    }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+

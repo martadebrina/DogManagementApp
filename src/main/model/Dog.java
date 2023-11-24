@@ -59,6 +59,7 @@ public class Dog implements Writable {
         return healthRecords;
     }
 
+
     // MODIFIES: this
     // EFFECT: add a health record to the list of health record of the dog
     public void addHealthRecord(HealthRecord healthRecord) {
