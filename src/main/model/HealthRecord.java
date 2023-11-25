@@ -53,11 +53,5 @@ public class HealthRecord implements Writable {
         json.put("healthRecordDate", healthRecordDate);
         return json;
     }
-
-    // Add this method to your HealthRecord class
-    public String formatForDisplay() {
-        return String.format("Health ID: %d, Type: %s, Name: %s, Date: %s",
-                getHealthId(), getHealthRecordType(), getHealthRecordName(), getHealthRecordDate());
-    }
 }
 
