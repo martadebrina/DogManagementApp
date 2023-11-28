@@ -1,6 +1,9 @@
 package ui;
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.Collection;
 import java.util.List;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,9 +13,11 @@ import model.HealthRecord;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import javax.swing.*;
+import model.EventLog;
+import model.Event;
 
 // represents user interface for the application
-public class PuppyPal extends JFrame {
+public class PuppyPal extends JFrame implements WindowListener {
     private static final String JSON_STORE = "./data/dogs.json";
     private Dogs dogs;
     private JsonWriter jsonWriter;
@@ -39,6 +44,7 @@ public class PuppyPal extends JFrame {
         dogs = new Dogs();
         this.getContentPane().setBackground(BACKGROUND_COLOR);
         setVisible(true);
+        addWindowListener(this);
     }
 
     // EFFECTS: initializes the main, dog, and health record panels
@@ -197,6 +203,7 @@ public class PuppyPal extends JFrame {
         JButton b9 = new JButton(ButtonNames.EXIT.getValue());
         buttonRow.add(b9);
         b9.addActionListener(e -> {
+            printLoggedEvents();
             System.exit(1);
         });
     }
@@ -416,7 +423,50 @@ public class PuppyPal extends JFrame {
         return null;
     }
 
+    // EFFECTS: prints all logged events to the console
+    private void printLoggedEvents() {
+        System.out.println("Logged Events:");
+        EventLog eventLog = EventLog.getInstance();
+        for (Event event : eventLog) {
+            System.out.println(event.getDate() + " -- " + event.getDescription());
+        }
+    }
 
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        printLoggedEvents();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }
 
 

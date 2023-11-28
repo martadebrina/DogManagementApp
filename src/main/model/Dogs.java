@@ -29,6 +29,7 @@ public class Dogs implements Writable {
     // EFFECTS: adds dog to the list of user's dogs
     public void addDog(Dog dog) {
         dogs.add(dog);
+        EventLog.getInstance().logEvent(new Event("Dog added to list of user's dogs"));
     }
 
 
@@ -39,6 +40,7 @@ public class Dogs implements Writable {
         for (Dog d: dogs) {
             if (d.getId() == dog.getId()) {
                 dogs.remove(d);
+                EventLog.getInstance().logEvent(new Event("Dog removed from list of user's dog"));
                 break;
             }
         }

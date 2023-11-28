@@ -64,6 +64,7 @@ public class Dog implements Writable {
     // EFFECT: add a health record to the list of health record of the dog
     public void addHealthRecord(HealthRecord healthRecord) {
         this.healthRecords.add(healthRecord);
+        EventLog.getInstance().logEvent(new Event("Health Record added to dog's health records"));
     }
 
     // MODIFIES: this
@@ -72,6 +73,7 @@ public class Dog implements Writable {
         for (HealthRecord h: healthRecords) {
             if (h.getHealthId() == healthId) {
                 healthRecords.remove(h);
+                EventLog.getInstance().logEvent(new Event("Health Record removed from dog's health records"));
                 break;
             }
         }

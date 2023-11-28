@@ -57,3 +57,12 @@ track of all our dog's needs and to ensure that our dogs are happy and healthy.
 - To reload the state of the application, click the "Load" button on the main panel. \
   This will deserialize the list of dogs and their health records from the JSON file located at "./data/dogs.json."
 
+
+## Phase 4: Task 2
+Representative sample of the events that occur when the program runs:
+
+Logged Events: \
+Sun Nov 26 17:23:47 PST 2023 -- Dog added to list of user's dogs \
+Sun Nov 26 17:24:10 PST 2023 -- Health Record added to dog's health records \
+Sun Nov 26 17:24:17 PST 2023 -- Health Record removed from dog's health records \
+Sun Nov 26 17:24:25 PST 2023 -- Dog removed from list of user's dog
