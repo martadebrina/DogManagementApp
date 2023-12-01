@@ -3,7 +3,6 @@ package ui;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.Collection;
 import java.util.List;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,6 +28,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     private JPanel mainPanel;
     private JPanel dogPanel;
     private JPanel healthRecordPanel;
+    private EventLog eventLog;
 
     // EFFECTS: runs the PuppyPal application
     public PuppyPal() throws FileNotFoundException {
@@ -120,7 +120,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: adds a new dog to the list
     public void addAddButton() {
-        JButton b1 = new JButton(ButtonNames.ADD.getValue());
+        JButton b1 = new JButton("Add Dog");
         buttonRow = formatButtonRow(b1);
         b1.addActionListener(e -> {
             doAddDog();
@@ -130,7 +130,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: handles viewing the list of dogs
     public void addViewButton() {
-        JButton b2 = new JButton(ButtonNames.VIEW.getValue());
+        JButton b2 = new JButton("View My Dogs");
         buttonRow.add(b2);
         b2.addActionListener(e -> {
             doViewDogs();
@@ -140,7 +140,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: handles removing a dog from the list
     public void addRemoveButton() {
-        JButton b3 = new JButton(ButtonNames.REMOVE.getValue());
+        JButton b3 = new JButton("Remove Dog");
         buttonRow.add(b3);
         b3.addActionListener(e -> {
             doRemoveDog();
@@ -150,7 +150,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: handles adding a health record to a dog
     public void addAddHrButton() {
-        JButton b4 = new JButton(ButtonNames.ADDHR.getValue());
+        JButton b4 = new JButton("Add Health Record");
         buttonRow.add(b4);
         b4.addActionListener(e -> {
             doAddHealthRecord();
@@ -160,7 +160,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: handles viewing health records for a specific dog
     public void addViewHrButton() {
-        JButton b5 = new JButton(ButtonNames.VIEWHR.getValue());
+        JButton b5 = new JButton("View Health Records");
         buttonRow.add(b5);
         b5.addActionListener(e -> {
             doViewHealthRecords();
@@ -170,7 +170,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: handles removing a health record from a dog
     public void addRemoveHrButton() {
-        JButton b6 = new JButton(ButtonNames.REMOVEHR.getValue());
+        JButton b6 = new JButton("Remove Health Record");
         buttonRow.add(b6);
         b6.addActionListener(e -> {
             doRemoveHealthRecord();
@@ -180,7 +180,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: saves the list of dogs to a file
     public void addSaveButton() {
-        JButton b7 = new JButton(ButtonNames.SAVE.getValue());
+        JButton b7 = new JButton("Save");
         buttonRow.add(b7);
         b7.addActionListener(e -> {
             doSaveDogs();
@@ -190,7 +190,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: loads the list of dogs from a file
     public void addLoadButton() {
-        JButton b8 = new JButton(ButtonNames.LOAD.getValue());
+        JButton b8 = new JButton("Load");
         buttonRow.add(b8);
         b8.addActionListener(e -> {
             doLoadDogs();
@@ -200,7 +200,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // MODIFIES: this
     // EFFECTS: exits the application
     public void addExitButton() {
-        JButton b9 = new JButton(ButtonNames.EXIT.getValue());
+        JButton b9 = new JButton("Exit");
         buttonRow.add(b9);
         b9.addActionListener(e -> {
             printLoggedEvents();
@@ -426,7 +426,7 @@ public class PuppyPal extends JFrame implements WindowListener {
     // EFFECTS: prints all logged events to the console
     private void printLoggedEvents() {
         System.out.println("Logged Events:");
-        EventLog eventLog = EventLog.getInstance();
+        eventLog = EventLog.getInstance();
         for (Event event : eventLog) {
             System.out.println(event.getDate() + " -- " + event.getDescription());
         }

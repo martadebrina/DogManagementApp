@@ -66,3 +66,19 @@ Sun Nov 26 17:23:47 PST 2023 -- Dog added to list of user's dogs \
 Sun Nov 26 17:24:10 PST 2023 -- Health Record added to dog's health records \
 Sun Nov 26 17:24:17 PST 2023 -- Health Record removed from dog's health records \
 Sun Nov 26 17:24:25 PST 2023 -- Dog removed from list of user's dog
+
+
+## Phase 4: Task 3
+One possible refactoring that might improve my design is to separate the functionality in UI.
+Currently, the PuppyPal class in the UI package handle both user interface functionality and 
+the underlying model (like removing the dog, adding health records, etc.), that might be can get messy and violating 
+the Single Responsibility Principle.
+
+A potential solution would be to introduce a separate controller or presenter class responsible for handling user 
+input and coordinating interactions between the UI and the model. For example, creating a new class 
+(e.g., PuppyPalController) that  manages how users interact with the program and talks to the "behind-the-scenes"
+workers (like handling dogs and health records).
+This way, the PuppyPal class remains focused on UI concerns, while the controller handles the underlying model logic.
+This would help achieve better maintainability, making it easier to extend or modify the user interface without 
+affecting the core application logic.
+
