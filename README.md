@@ -1,4 +1,4 @@
-# My Personal Project: PuppyPal
+# Personal Project: PuppyPal
 
 ## Description
 
